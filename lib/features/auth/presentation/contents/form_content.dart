@@ -37,10 +37,11 @@ class _FormContentState extends State<FormContent> {
           ),
           const CheckboxWidget(),
           const Gap(24),
-          const CustomButtonWidget(
+          CustomButtonWidget(
             text: 'Log in',
             buttonColor: Colors.cyan,
             textColor: Colors.white,
+            onPress: () {},
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16),
@@ -51,10 +52,11 @@ class _FormContentState extends State<FormContent> {
               ),
             ),
           ),
-          const CustomButtonWidget(
+          CustomButtonWidget(
             text: 'Fingerprint',
             buttonColor: Colors.white,
             textColor: Colors.cyan,
+            onPress: () {},
           ),
         ],
       ),

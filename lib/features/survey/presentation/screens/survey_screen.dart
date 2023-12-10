@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:get/get.dart';
 import 'package:ristu_intern_challenge/core/utils/typograph.dart';
 import 'package:ristu_intern_challenge/features/survey/presentation/widgets/survey_list_widget.dart';
 
@@ -22,13 +23,32 @@ class _SurveyScreenState extends State<SurveyScreen> {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Text(
-                  'Halaman Survei',
-                  style: StyleTypograph.heading3.black,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Halaman Survei',
+                      style: StyleTypograph.heading3.black,
+                    ),
+                    IconButton(
+                      icon: const Icon(
+                        Icons.logout_outlined,
+                        color: Colors.red,
+                      ),
+                      onPressed: () {
+                        debugPrint('test');
+                      },
+                    ),
+                  ],
                 ),
               ),
               const Gap(16),
-              const SurveyListWidget(),
+              InkWell(
+                onTap: () {
+                  Get.toNamed<void>('/surveytodo');
+                },
+                child: const SurveyListWidget(),
+              ),
             ],
           ),
         ),
