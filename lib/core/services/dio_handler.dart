@@ -14,13 +14,16 @@ class DioHandler {
 
   Dio _getDio() {
     final header = <String, dynamic>{
-      'isToken': preferences.isKeyExists(PrefsKey.tokenBearer),
+      'Authorization': preferences.isKeyExists(PrefsKey.tokenBearer),
     };
 
     final options = BaseOptions(
       baseUrl: config.apiBaseUrl ?? '',
       receiveDataWhenStatusError: true,
       headers: header,
+      validateStatus: (status) {
+        return status! < 500;
+      },
     );
 
     final dio = Dio(options);
@@ -44,10 +47,13 @@ class DioHandler {
         final headers = {
           'Authorization': 'Bearer $storageToken',
           'Accept': 'application/json',
+          'Cookie': 'token=$storageToken',
         };
 
-        if (options.headers.containsKey('isToken')) {
-          options.headers.remove('isToken');
+        options.headers.addAll(headers);
+
+        if (options.headers.containsKey('token')) {
+          options.headers.remove('token');
           options.headers.addAll(headers);
         }
 

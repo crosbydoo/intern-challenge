@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 class CustomFormWidget extends StatefulWidget {
@@ -5,10 +6,12 @@ class CustomFormWidget extends StatefulWidget {
     required this.obscuredText,
     required this.hintText,
     super.key,
+    this.controller,
   });
 
   final bool obscuredText;
   final String hintText;
+  final TextEditingController? controller;
 
   @override
   State<CustomFormWidget> createState() => _CustomFormWidgetState();
@@ -29,6 +32,13 @@ class _CustomFormWidgetState extends State<CustomFormWidget> {
           valueListenable: showPassword,
           builder: (context, value, child) {
             return TextFormField(
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Please fill the textfield';
+                }
+                return null;
+              },
+              controller: widget.controller,
               obscureText: widget.obscuredText
                   ? showPassword.value
                   : !showPassword.value,

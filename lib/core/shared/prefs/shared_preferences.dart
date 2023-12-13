@@ -10,7 +10,7 @@ class SharedPrefs {
     return _instance!;
   }
 
-  Future<void> putBool({required String key, required bool value}) =>
+  Future<void> putBool(String key, bool value) =>
       _preferences!.setBool(key, value);
 
   bool? getBool(String key) => _preferences!.getBool(key);
@@ -23,7 +23,12 @@ class SharedPrefs {
   Future<bool> putInt(String key, int value) =>
       _preferences!.setInt(key, value);
 
-  int getInt(String key) => _preferences!.getInt(key)!;
+  int? getInt(String key) {
+    if (_preferences == null) return null; // Handle null case
+
+    final value = _preferences?.getInt(key);
+    return value; // Use null-aware operator to handle null value
+  }
 
   Future<bool> putString(String key, String value) =>
       _preferences!.setString(key, value);

@@ -4,7 +4,9 @@ import 'package:json_annotation/json_annotation.dart';
 part 'failures.g.dart';
 
 abstract class Failure extends Equatable {
-  const Failure(this.message);
+  const Failure(
+    this.message,
+  );
 
   final String message;
 }

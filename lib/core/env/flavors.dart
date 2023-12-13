@@ -4,21 +4,21 @@ class FlavorSettings {
   FlavorSettings.development() {
     EnvConfig.getInstance(
       flavorName: 'development',
-      apiBaseUrl: '----',
+      apiBaseUrl: 'https://dev-api-lms.apps-madhani.com/v1',
     );
   }
 
   FlavorSettings.staging() {
     EnvConfig.getInstance(
       flavorName: 'staging',
-      apiBaseUrl: '--',
+      apiBaseUrl: 'https://dev-api-lms.apps-madhani.com/v1',
     );
   }
 
   FlavorSettings.production() {
     EnvConfig.getInstance(
       flavorName: 'production',
-      apiBaseUrl: '--',
+      apiBaseUrl: 'https://dev-api-lms.apps-madhani.com/v1',
     );
   }
 }
