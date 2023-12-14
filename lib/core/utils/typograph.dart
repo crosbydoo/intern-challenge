@@ -17,7 +17,7 @@ class Typograph {
 }
 
 class StyleTypograph {
-  static const String _fontName = 'Montserrat';
+  static const String _fontName = 'Poppins';
 
   //* Heading 1
   static Typograph heading1 = Typograph(

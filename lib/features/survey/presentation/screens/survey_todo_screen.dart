@@ -1,44 +1,51 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ristu_intern_challenge/core/di/injections.dart';
 import 'package:ristu_intern_challenge/features/survey/presentation/contents/answer_content.dart';
-import 'package:ristu_intern_challenge/features/survey/presentation/contents/question_content.dart';
-import 'package:ristu_intern_challenge/features/survey/presentation/widgets/survey_button_widget.dart';
-import 'package:ristu_intern_challenge/features/survey/presentation/widgets/survey_heading_widget.dart';
+import 'package:ristu_intern_challenge/features/survey/presentation/cubit/survey_cubit.dart';
 
 class SurveyTodoScreen extends StatefulWidget {
-  const SurveyTodoScreen({super.key});
+  const SurveyTodoScreen({required this.uuid, super.key});
+
+  final String uuid;
 
   @override
   State<SurveyTodoScreen> createState() => _SurveyTodoScreenState();
 }
 
 class _SurveyTodoScreenState extends State<SurveyTodoScreen> {
+  final detailSurveyCubit = sl<SurveyCubit>();
+
+  @override
+  void initState() {
+    detailSurveyCubit.getQuestion(widget.uuid);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
-                children: [
-                  SurveyHeadingWidget(),
-                  Gap(20),
-                  QuestionContent(),
-                  Gap(16),
-                ],
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 6),
-              decoration:
-                  BoxDecoration(color: Colors.blueAccent.withOpacity(0.3)),
-            ),
-            const Expanded(child: AnswerContent()),
-            const SurveyButtonWidget(),
-          ],
+    return BlocProvider(
+      create: (context) => detailSurveyCubit,
+      child: Scaffold(
+        body: SafeArea(
+          child: BlocBuilder<SurveyCubit, SurveyState>(
+            builder: (context, state) {
+              if (state is GetDetailSurveySuccess) {
+                final data = state.result.data;
+
+                final questions = data.question;
+                final name = data.name;
+
+                return AnswerContent(
+                  questions: questions,
+                  nameQuestion: name,
+                  surveyId: widget.uuid,
+                );
+              }
+              return Container();
+              //
+            },
+          ),
         ),
       ),
     );

@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:get/get.dart';
 import 'package:ristu_intern_challenge/core/shared/widgets/custom_button_widget.dart';
 
-class SurveyButtonWidget extends StatefulWidget {
-  const SurveyButtonWidget({super.key});
+class SurveyButtonWidget extends StatelessWidget {
+  const SurveyButtonWidget({
+    required this.onNextPressed,
+    required this.onBackPressed,
+    required this.onFinishPressed,
+    required this.isLastQuestion,
+    super.key,
+  });
+  final VoidCallback onNextPressed;
+  final VoidCallback onBackPressed;
+  final VoidCallback onFinishPressed;
+  final bool isLastQuestion;
 
-  @override
-  State<SurveyButtonWidget> createState() => _SurveyButtonWidgetState();
-}
-
-class _SurveyButtonWidgetState extends State<SurveyButtonWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -22,18 +26,16 @@ class _SurveyButtonWidgetState extends State<SurveyButtonWidget> {
               buttonColor: Colors.white,
               text: 'Back',
               textColor: Colors.cyan,
-              onPress: () {
-                Get.back<void>();
-              },
+              onPress: onBackPressed,
             ),
           ),
           const Gap(16),
           Expanded(
             child: CustomButtonWidget(
               buttonColor: Colors.cyan,
-              text: 'Next',
+              text: isLastQuestion ? 'Finish' : 'Next',
               textColor: Colors.white,
-              onPress: () {},
+              onPress: isLastQuestion ? onFinishPressed : onNextPressed,
             ),
           ),
         ],

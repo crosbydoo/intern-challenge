@@ -22,3 +22,9 @@ final class GetSurveySuccess extends SurveyState {
 
   final SurveyEntity result;
 }
+
+final class GetDetailSurveySuccess extends SurveyState {
+  const GetDetailSurveySuccess(this.result);
+
+  final DetailSurveyEntity result;
+}

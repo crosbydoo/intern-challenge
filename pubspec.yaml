@@ -47,9 +47,9 @@ flutter:
   uses-material-design: true
   generate: true
   fonts:
-    - family: Montserrat
+    - family: Poppins
       fonts:
-        - asset: assets/font/Montserrat.ttf
+        - asset: assets/font/Poppins.ttf
   assets:
     - assets/json/
     - assets/img/

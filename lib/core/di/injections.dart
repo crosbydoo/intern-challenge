@@ -13,6 +13,7 @@ import 'package:ristu_intern_challenge/features/survey/data/datasources/survey_l
 import 'package:ristu_intern_challenge/features/survey/data/datasources/survey_remote_datasources.dart';
 import 'package:ristu_intern_challenge/features/survey/data/repositories/survey_repostitory_impl.dart';
 import 'package:ristu_intern_challenge/features/survey/domain/repositories/survey_repository.dart';
+import 'package:ristu_intern_challenge/features/survey/domain/usecases/question_usecase.dart';
 import 'package:ristu_intern_challenge/features/survey/domain/usecases/survey_usecase.dart';
 import 'package:ristu_intern_challenge/features/survey/presentation/cubit/survey_cubit.dart';
 
@@ -65,8 +66,9 @@ class Injections {
         ),
       )
       ..registerLazySingleton(() => SurveyUsecase(sl()))
+      ..registerLazySingleton(() => QuestionUsecase(sl()))
       ..registerFactory(
-        () => SurveyCubit(sl()),
+        () => SurveyCubit(sl(), sl()),
       );
   }
 }
