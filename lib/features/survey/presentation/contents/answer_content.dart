@@ -33,7 +33,7 @@ class _AnswerContentState extends State<AnswerContent> {
   late int secondsRemaining;
   late Timer timer;
   late ValueNotifier<int> secondsNotifier;
-  Map<String, dynamic> responseJson = {
+  late Map<String, dynamic> responseJson = {
     'survey_id': '',
     'answers': [],
   };
@@ -51,6 +51,8 @@ class _AnswerContentState extends State<AnswerContent> {
 
     if (widget.questions.isNotEmpty) {
       selectedQuestion = widget.questions.first;
+
+      _saveAnswerPoints();
     }
   }
 
@@ -320,37 +322,28 @@ class _AnswerContentState extends State<AnswerContent> {
     }
   }
 
-  void onFinishSurvey() {
-    _saveAnswerPoints();
-
-    Get.off<void>(
-      () => ResultContent(
-        finaldata: responseJson,
-      ),
-    );
-  }
-
   void moveToNextQuestion() {
     final currentIndex = widget.questions.indexOf(selectedQuestion!);
 
+    if (selectedQuestion!.scoring) {
+      _saveAnswerPoints();
+    }
+
     if (currentIndex == widget.questions.length - 1 && secondsRemaining <= 0) {
       if (selectedQuestion!.scoring) {
-        _saveAnswerPoints();
         Get.off<void>(
           () => ResultContent(
             finaldata: responseJson,
           ),
         );
       }
-    } else if (currentIndex < widget.questions.length - 1) {
+    } else {
       setState(() {
-        selectedQuestion = widget.questions[currentIndex + 1];
-        secondsRemaining = 10;
-        selectedRadioValue = null;
-        selectedRadioValues.clear();
-
-        if (selectedQuestion!.scoring) {
-          _saveAnswerPoints();
+        if (currentIndex < widget.questions.length - 1) {
+          selectedQuestion = widget.questions[currentIndex + 1];
+          secondsRemaining = 10;
+          selectedRadioValue = null;
+          selectedRadioValues.clear();
         }
       });
     }
@@ -384,11 +377,20 @@ class _AnswerContentState extends State<AnswerContent> {
         });
       }
     }
+
     responseJson = <String, dynamic>{
       'survey_id': widget.surveyId,
       'answers': answerList,
     };
 
     print('check hasil akhir $responseJson');
+  }
+
+  void onFinishSurvey() {
+    Get.off<void>(
+      () => ResultContent(
+        finaldata: responseJson,
+      ),
+    );
   }
 }

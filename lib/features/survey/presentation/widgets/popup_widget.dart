@@ -17,6 +17,8 @@ class ShowPopup extends StatefulWidget {
 }
 
 class _ShowPopupState extends State<ShowPopup> {
+  late int selectedQuestionIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     final data = widget.data;
@@ -38,8 +40,12 @@ class _ShowPopupState extends State<ShowPopup> {
               itemCount: data.length,
               itemBuilder: (context, index) {
                 final question = data[index];
+
                 return GestureDetector(
                   onTap: () {
+                    setState(() {
+                      selectedQuestionIndex = index;
+                    });
                     widget.onItemSelected(question);
                     Navigator.of(context).pop();
                   },
@@ -47,14 +53,18 @@ class _ShowPopupState extends State<ShowPopup> {
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
                       border: Border.all(),
-                      color: Colors.blue,
+                      color: index == selectedQuestionIndex
+                          ? Colors.blue
+                          : Colors.white,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Center(
                       child: Text(
                         question.number,
                         style: StyleTypograph.label3.bold.copyWith(
-                          color: Colors.white,
+                          color: index == selectedQuestionIndex
+                              ? Colors.white
+                              : Colors.black,
                           decoration: TextDecoration.none,
                         ),
                       ),

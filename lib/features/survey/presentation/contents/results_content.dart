@@ -15,9 +15,11 @@ class ResultContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final finalDataModel = FinalDataModel.fromJson(finaldata);
     final answers = finalDataModel.answers;
-    var score = '0';
+
+    var score = 0;
+
     for (final answer in answers) {
-      score = answer.answer;
+      score += int.tryParse(answer.answer) ?? 0;
     }
 
     return Scaffold(
@@ -34,7 +36,7 @@ class ResultContent extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  score,
+                  score.toString(), // Display the total score
                   style: StyleTypograph.heading1.bold,
                 ),
               ),
