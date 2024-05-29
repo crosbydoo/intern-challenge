@@ -22,7 +22,7 @@ dependencies:
   freezed: ^2.4.7
   gap: ^3.0.1
   get: ^4.6.5
-  get_it: ^7.6.0
+  get_it: ^7.6.7
   google_fonts: ^6.1.0
   intl: ^0.18.0
   introduction_screen: ^3.1.11
